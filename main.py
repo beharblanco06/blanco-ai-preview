@@ -17,9 +17,9 @@ class Request(BaseModel):
     seed: int = 42
 @app.get("/")
 def index():
-    return {"name":"BLANCO SIM LAB","model":"input-driven Monte Carlo prototype","auto_data":False,"supported":["nba","nfl","nhl","mlb","soccer"],"docs":"/docs"}
+    return {"name":"BLANCO SIM LAB","model":"input-driven Monte Carlo prototype","auto_data":"historical_scores_only","supported":["nba","nfl","nhl","mlb","soccer"],"docs":"/docs"}
 @app.get("/health")
-def health(): return {"status":"ok","max_simulations":5000,"auto_data":False}
+def health(): return {"status":"ok","max_simulations":5000,"auto_data":"historical_scores_only"}
 @app.post("/simulate")
 def simulate(req:Request, x_api_key: str|None=Header(default=None)):
     key = os.getenv("SIM_API_KEY")
@@ -47,3 +47,6 @@ def simulate(req:Request, x_api_key: str|None=Header(default=None)):
         result["home_spread"]=req.home_spread
         result["home_cover_probability"]=sum(h+req.home_spread>a for h,a in zip(homes,aways))/n
     return result
+
+# Mount remote MCP tools alongside the existing FastAPI routes.
+import server  # noqa: F401, E402
