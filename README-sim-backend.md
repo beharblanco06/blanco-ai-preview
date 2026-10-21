@@ -1,0 +1,1 @@
+BLANCO SIM LAB dedicated simulation backend. Uses 5000 input-driven correlated team-score Monte Carlo trials. Does NOT connect live data feeds, simulate possessions or predict player props. Do not present as RotoBot-like calibrated model. The /simulate endpoint requires a private SIM_API_KEY in X-API-Key. See /docs for API schema.
